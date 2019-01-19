@@ -1,2 +1,2 @@
 # WhaXPbot
-A Whatsapp bot made with WebWhatsapp Wrapper, experience point in chat
+A Whatsapp bot made with WebWhatsapp Wrapper, to manage experience point in a group
