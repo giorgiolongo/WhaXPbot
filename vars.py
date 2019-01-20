@@ -22,6 +22,7 @@ help_msg = """
 *!comandi:* Mostra questo messaggio
 *!tracotante:* AUA
 *!insulta [nome]:* Centinaia di insulti per mamme zii e cugini di chiunque
+*!lista:* Crea una lista randomica tra gli utenti del gruppo
 """
 
 insulti = [
