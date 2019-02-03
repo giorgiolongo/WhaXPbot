@@ -1,5 +1,7 @@
-from vars import NotACommand
+from data import NotACommand, textcommands
 from difflib import get_close_matches
+import random
+from re import split, sub
 
 def is_command(message: str, prefix: str="!") -> bool:
     """
@@ -37,16 +39,44 @@ def get_args(message: str, prefix: str="!") -> list:
 def is_safe(message):
     return message == str
 
+def split_by_word(message, words, bannedwords, remspaces=True):
+    wordstr = ""
+    bannedstr = ""
+    for x,row in enumerate(words):
+        wordstr += words[x] + "|"
+    for x,row in enumerate(bannedwords):
+        bannedstr += bannedwords[x] + "|"
+    splitted = split(wordstr[:-1], message)
+    if remspaces:
+        bannedstr += "\s+"
+    for x,row in enumerate(splitted):
+        splitted[x] = sub(bannedstr,"", splitted[x])
+    return splitted
 
-def normalize_list(input):
-    output = list()
-    for x,row in enumerate(input):
-    	output.append(input[x][0])
+
+def stringify_leaderboard(list):
+    output = "*👑 Classifica 👑*\n"
+    for x,row in enumerate(list):
+        name = list[x][0].capitalize()
+        y = x + 1
+        string = "*" + str(y) + ". " + name + ":* " + str(list[x][1]) + "\n"
+        output += string
     return output
 
-if __name__ == "__main__":
-    while True:
-        if input("Test a function(get_args or is_command): ") == "is_command":
-            print(is_command(input("input: "), input("prefix: ")))
-        else:
-            print(get_args(input("(get_args) string: ")))
+def stringify_homework(list, date):
+    output = "*📚Compiti per il " + date + ":📚*\n"
+    for x,row in enumerate(list):
+        name = list[x][0].capitalize()
+        output += "*" + name + ":* " + list[x][1] + "\n"
+    return output
+
+
+def normalize_list(input):
+    return [i[0] for i in input]
+
+def simple_command_hendler(input):
+    answ = random.choice(textcommands[get_args(input)[0]])
+    if len(get_args(input)) > 1:
+        return answ.replace("%s", get_args(input)[1])
+    else:
+        return answ
